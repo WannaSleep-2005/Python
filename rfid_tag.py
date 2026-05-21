@@ -14,7 +14,7 @@ CARDS = {
         'type'       : 'EM4100',
         'facility'   : 12,                 # HID facility code
         'card_number': 3456,               # HID card number
-        'owner'      : 'Nguyen Van A',
+        'owner'      : 'Dinh Manh Duc',
         'access_level': 'EMPLOYEE',
     },
     'CARD_002': {
@@ -22,7 +22,7 @@ CARDS = {
         'type'       : 'HID_PROX',
         'facility'   : 12,
         'card_number': 7890,
-        'owner'      : 'Tran Thi B',
+        'owner'      : 'Nguyen Nguyen Khuyen',
         'access_level': 'ADMIN',
     },
 }
