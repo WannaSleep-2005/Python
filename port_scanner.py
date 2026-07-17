@@ -21,5 +21,5 @@ Host: 192.168.1.30
 
 for key, value in hosts.items():
     print(f"Host: {key}")
-    for i in range(len(hosts[key])):
-        print(f"  Open Port: {value[i]}")
+    for i in value:
+        print(f"  Open Port: {i}")
