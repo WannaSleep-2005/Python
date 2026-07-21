@@ -28,22 +28,39 @@ def result_scan(response):
     print(f"Response Time : {response.elapsed}")
 
     content_type = response.headers.get("Content-Type", "")
-    if "application/json" not in content_type:
-        return "JSON: No"
     
     print(f"Content-Type  : {content_type}")
     
     server = response.headers.get("Server", "Unknown")
     print(f"Server        : {server}")
-    print(f"JSON type     : {type(response.json()).__name__}")
+    
+    if "application/json" in content_type:
+        print(f"JSON type : {type(response.json()).__name__}")
+    else:
+        print("JSON type : Not JSON")
 
 # Tìm ra người dùng đầu tiên trong dữ liệu
 def first_user(data):
     #for user in data:
     #    if user['id'] == 1:
     #        print(f"First username: {user['username']}")
-    if len(data) > 0:
+    if len(data) > 0 and "username" in data[0]:
         print("First username:", data[0]['username'])
+
+# In ra cookie
+def show_cookies(response):
+    if not response.cookies:
+        print("[-] No Cookies")
+
+    for cookie in response.cookies:
+        print(f"{cookie.name} = {cookie.value}")
+
+# Check API JSON
+def is_json(response):
+    if "application/json" in response.headers.get("Content-Type", "Unknown"):
+        print("[+] JSON API Detected")
+    else:
+        print("[-] Not JSON")
 
 # Chạy và đề phòng các lỗi xảy ra
 try:
@@ -55,14 +72,19 @@ try:
     # Tạo lỗi khi status code không phải là 200
     response.raise_for_status()
     
-    json_data = response.json()
-    
-    result_scan(response)
-    
-    count_object(json_data)
-    
-    first_user(json_data) 
+    if "application/json" in response.headers.get("Content-Type"):
+        json_data = response.json()
 
+        count_object(json_data)
+        
+        first_user(json_data) 
+
+    result_scan(response)
+
+    show_cookies(response)
+
+    is_json(response)
+    
 except requests.exceptions.MissingSchema:
     print("Invalid URL")
 
